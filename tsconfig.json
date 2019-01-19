@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "declaration": true,
+    "sourceMap": false,
+    "outDir": "./js-src",
+    "strict": true,
+    "baseUrl": "./src",
+    "esModuleInterop": false,
+    "inlineSourceMap": true,
+  },
+  "files": [
+    "./src/icc-parser.ts"
+  ]
+}
