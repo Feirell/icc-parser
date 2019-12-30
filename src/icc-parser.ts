@@ -1,5 +1,6 @@
 import { REGEXP_ICC_META_MATCHER, REGEXP_ICC_CARD_SIDE_MATCHER } from './icc-language-matcher';
 import { ICCDocument, ICCCard, ICCMeta } from './icc-types';
+export * from './icc-types';
 import { getAll } from './reg-exp-helper';
 
 class ICCParserError extends Error {
