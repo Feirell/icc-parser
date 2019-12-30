@@ -8,7 +8,7 @@ class ICCParserError extends Error {
 
 const toNewLineOnly = (str: string) => str.replace(/\r\n/g, '\n');
 
-export default function parse(str: string) {
+export function parseICC(str: string) {
     // const metaMatchResult = (() => { try { return getAll(REGEXP_ICC_META, str) } catch (e) { throw new ICCParserError("could not parse the meta part of the document") } })();
     const metaMatchResult = getAll(REGEXP_ICC_META_MATCHER, str);
 

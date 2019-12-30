@@ -2,11 +2,11 @@ import { positiveLookahead } from './reg-exp-helper';
 
 const lineBreak = '(?:\\r?\\n)'
 
-const frontOrBackKeywords = lineBreak + '{2}(?<side>Front|Back):' + lineBreak + '{2}';
+const frontOrBackKeywords = lineBreak + '{2}(Front|Back):' + lineBreak + '{2}';
 const cardContentMatch = '((?:' + lineBreak + '|.)+?)';
 
-const metaNameMatcher = '(?<collectionName>\\w+)';
-const metaFieldMatcher = '(?<field>.+)';
+const metaNameMatcher = '(\\w+)';
+const metaFieldMatcher = '(.+)';
 
 export const REGEXP_ICC_META_REGEXP_STRING = '(?:' + lineBreak + '|^)' + 'ICC-' + metaNameMatcher + ': ?' + metaFieldMatcher + positiveLookahead(lineBreak);
 export const REGEXP_ICC_CARD_SIDE_REGEXP_STRING = frontOrBackKeywords + cardContentMatch + positiveLookahead('(:?' + frontOrBackKeywords + ')|$');

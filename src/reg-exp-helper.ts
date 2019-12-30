@@ -16,13 +16,14 @@ export const regexIterator = (regexp: RegExp, str: string, startIndex = 0) => {
             return { done: true, value: undefined };
 
         const match = copy.exec(str) as FullRegExpMatchArray;
-        match.lastIndex = copy.lastIndex;
 
         //we are done since we either did not match or can only match once
         done = match === null || !copy.global;
 
         if (match === null)
             return ite.next();
+
+        match.lastIndex = copy.lastIndex;
 
         // this prevent an infinite loop on zero width matches
         if (match.index == copy.lastIndex)
