@@ -2,7 +2,7 @@
   "name": "icc-parser",
   "version": "0.0.1",
   "description": "Parses Index Card Collection files (.icc)",
-  "main": "js-src/icc-parser.js",
+  "main": "lib/icc-parser.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
@@ -18,7 +18,7 @@
     "index-card-collection"
   ],
   "files": [
-    "js-src"
+    "lib"
   ],
   "author": "Florian Völker <Neirolf2030@web.de>",
   "license": "MIT",

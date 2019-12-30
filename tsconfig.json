@@ -4,7 +4,7 @@
     "module": "commonjs",
     "declaration": true,
     "sourceMap": false,
-    "outDir": "./js-src",
+    "outDir": "./lib",
     "strict": true,
     "baseUrl": "./src",
     "esModuleInterop": false,
