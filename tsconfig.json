@@ -2,13 +2,12 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "declaration": true,
-    "sourceMap": false,
     "outDir": "./lib",
-    "strict": true,
     "baseUrl": "./src",
-    "esModuleInterop": false,
-    "inlineSourceMap": true,
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "files": [
     "./src/icc-parser.ts"
