@@ -1,5 +1,5 @@
 import ICCLanguageMatcher from './icc-language-matcher';
-import { ICCDocument, ICCCard, ICCMeta } from './icc-classes';
+import { ICCDocument, ICCCard, ICCMeta } from './icc-types';
 import { getAll } from './reg-exp-helper';
 
 export default (() => {
@@ -28,30 +28,47 @@ export default (() => {
         REGEXP_ICC_CARD_SIDE.lastIndex = metaMatchResult.lastIndex;
         const cardsMatchResult = (() => { try { return getAll(REGEXP_ICC_CARD_SIDE, str) } catch (e) { throw new ICCParserError("could not parse the cards part of the document") } })();
 
-        const metaObjects = [];
-        for (let [, name, value] of metaMatchResult.matches)
-            metaObjects.push(new ICCMeta(name, value))
+        const metaObjects: ICCMeta[] = [];
+        for (const [, field, value] of metaMatchResult.matches)
+            metaObjects.push({ field, value })
 
-        const cardsObjects = [];
+        const cardsObjects: ICCCard[] = [];
 
-        let buffer: { [key: string]: null | string } = {
-            Front: null,
-            Back: null
-        };
+        let bufferSide = true;
+        let buffer: undefined | string;
 
-        for (let [, side, cardContent] of cardsMatchResult.matches) {
+        for (const [, sideIdentifier, cardContent] of cardsMatchResult.matches) {
+            const side = sideIdentifier == 'Front';
+            const formattedCC = side ? cardContent : toNewLineOnly(cardContent);
 
-            if (buffer[side] != null) {
-                cardsObjects.push(new ICCCard(buffer.Front, buffer.Back))
-                buffer.Front = buffer.Back = null;
+            if (buffer) {
+                if (bufferSide == side) {
+                    cardsObjects.push({
+                        [bufferSide ? 'front' : 'back']: buffer
+                    });
+
+                    bufferSide = side;
+                    buffer = formattedCC;
+                } else {
+                    cardsObjects.push({
+                        [bufferSide ? 'front' : 'back']: buffer,
+                        [side ? 'front' : 'back']: formattedCC,
+                    });
+
+                    buffer = undefined;
+                }
+            } else {
+                bufferSide = side;
+                buffer = formattedCC;
             }
-
-            buffer[side] = side == 'Front' ? cardContent : toNewLineOnly(cardContent);
         }
 
-        if (buffer.Front != null || buffer.Back != null)
-            cardsObjects.push(new ICCCard(buffer.Front, buffer.Back))
+        if (buffer) {
+            cardsObjects.push({
+                [bufferSide ? 'front' : 'back']: buffer
+            });
+        }
 
-        return new ICCDocument(metaObjects, cardsObjects);
+        return { metaInformation: metaObjects, cards: cardsObjects } as ICCDocument;
     }
 })();
