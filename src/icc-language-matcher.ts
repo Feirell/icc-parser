@@ -2,7 +2,7 @@ import { positiveLookahead } from './reg-exp-helper';
 
 const lineBreak = '(?:\\r?\\n)'
 
-const frontOrBackKeywords = lineBreak + '{2}(Front|Back):' + lineBreak + '{2}';
+const frontOrBackKeywords = lineBreak + '\\s*{2}(Front|Back):\\s*' + lineBreak + '{2}';
 const cardContentMatch = '((?:' + lineBreak + '|.)+?)';
 
 const metaNameMatcher = '(\\w+)';
